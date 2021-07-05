@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Index</title>
+	<title>CryptoSound</title>
 </head>
 <body>
 
@@ -107,6 +107,7 @@
 		.doppia{
 			grid-column: span 2;
 
+
 		}
 
 		.dida {
@@ -116,6 +117,10 @@
 
 		::placeholder {
 			color: grey;
+		}
+
+		a:hover {
+  		font-weight: bold;
 		}
 
 		
@@ -143,25 +148,39 @@
 
 
 	<div  class="griglia">
-	<div class="cella quadrupla">
-			<h2>CryptoSound</h2>
+	<div class="cella">
+			<h2 style="margin-top: 1em; text">CryptoSound</h2>
+		</div>
+
+	<div class="cella">
+			<h6></h6>
+		</div>
+
+	<div class="cella">
+			
+		</div>
+
+	<div class="cella">
+			<h6 style="text-align: right; margin-top: 3.5em; text-decoration: underline;"><a href="" style="color: black; font-weight: lighter;"> Indice</a></h6>
+	
+			
 		</div>
 
 	<div class="cella doppia titoletto">
-		Encoder
+		Codifica
 	</div>
 	<div class="cella doppia titoletto">
 		
 	</div>
 
 	<div class="cella doppia">
-		<textarea style="resize: none; padding-top: 0.5em;" id="input_text"  class="box1" placeholder="Write your text here..."></textarea> 
+		<textarea style="resize: none; padding-top: 0.5em;" id="input_text"  class="box1" placeholder="Inserisci il testo"></textarea> 
 	
-	<div id="bottone" class="bottone">Go</div>
+	<div id="bottone" class="bottone">Vai</div>
 	</div>
 
 	<div class="cella doppia">
-		<textarea style="resize: none; padding-top: 0.5em;" id="risultato"  class="box2" placeholder="Code"></textarea>
+		<textarea disabled style="resize: none; padding-top: 0.5em;" id="risultato"  class="box2" placeholder="Codice"></textarea>
 	</div>
 
 	<!-- <div class="cella dida">
