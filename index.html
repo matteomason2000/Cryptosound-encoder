@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index</title>
+</head>
+<body>
+
+	<style type="text/css">
+
+		body {	font: 2em 'Helvetica';
+				font-weight: lighter;
+			}
+
+		.bottone {
+			background-color: white;
+		  border: 1px solid black;
+		  color: black;
+		  padding: 15px 32px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 4px 2px;
+		  cursor: pointer;
+		}	
+		}
+
+		.bottone:hover{
+			background-color: rgb(34, 139, 34);
+			cursor: pointer;
+			color: white;
+		}
+
+		textarea:focus{
+        outline: none;
+    	}
+
+    	textarea:disabled {
+  		color: black;
+  		}
+
+		.box1 {
+
+			display: block;
+			width: auto;
+			min-height: 3em;
+			width: 100%;
+			min-width: 3em;
+			height: 6em;
+			border: 1px solid black;
+			background-color: white;
+			color: black;
+			margin-bottom: 1em;
+			word-wrap: break-word;
+			font-weight: 200;
+			font-size: 1em;
+			padding: 0 0 0 10px;
+			font-family: helvetica;
+			word-break: break-word;
+			overflow: scroll;
+			}
+
+
+
+		.box2 {
+			display: block;
+			width: auto;
+			min-height: 3em;
+			width: 100%;
+			min-width: 3em;
+			height: 6em;
+			border: 1px solid black;
+			background-color: white;
+			color: black;
+			margin-bottom: 2em;
+			word-wrap: break-word;
+			font-family: helvetica;
+			font-weight: lighter;
+			font-size: 1em;
+			padding: 0 0 0 10px;
+			overflow: scroll;
+			padding-top: 0.5em;
+		}
+
+		.griglia{
+
+			margin: 2em 3em;
+			max-width: 1500px;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			grid-column-gap:1em;
+
+		}
+
+		.cella{
+			/*outline: 1px red solid;*/
+			min-height: 2em;
+			margin-bottom: 1em;
+			font-weight: lighter;
+			font-family: Helvetica;
+		}
+
+		.quadrupla{
+			grid-column: span 4;
+
+		}
+		.doppia{
+			grid-column: span 2;
+
+		}
+
+		.dida {
+			font-weight: lighter;
+			font-size: 0.5em;
+		}
+
+		::placeholder {
+			color: grey;
+		}
+
+		
+
+		[contentEditable=true]:empty:not(:focus):before{
+    	content:attr(data-text)
+		}		
+
+		.titoletto{
+			font-weight: lighter;
+		}
+
+		.title:empty:not(:focus):before {
+  		content: attr(data-placeholder);
+  		color:grey;
+		}
+
+
+
+	</style>
+
+
+
+
+
+
+	<div  class="griglia">
+	<div class="cella quadrupla">
+			<h2>CryptoSound</h2>
+		</div>
+
+	<div class="cella doppia titoletto">
+		Encoder
+	</div>
+	<div class="cella doppia titoletto">
+		
+	</div>
+
+	<div class="cella doppia">
+		<textarea style="resize: none; padding-top: 0.5em;" id="input_text"  class="box1" placeholder="Write your text here..."></textarea> 
+	
+	<div id="bottone" class="bottone">Go</div>
+	</div>
+
+	<div class="cella doppia">
+		<textarea style="resize: none; padding-top: 0.5em;" id="risultato"  class="box2" placeholder="Code"></textarea>
+	</div>
+
+	<!-- <div class="cella dida">
+	<p> Franzè Martin Ross <br> Mason Matteo </p>
+	</div>
+
+ 	-->
+
+
+	<script type="module">
+	import { tone, SIN, TRI, SAW, SQR } from "./sound.js"
+
+	const TEMPO = 0.3
+
+	const OTTAVA = 12 * 2
+
+	const INIZIO_TRASMISSIONE =  11 + OTTAVA      // detect diventa --> 90
+	const SEPARATORE_LETTERA = 9 + OTTAVA         // detect diventa --> 88
+	const NOTE = [ 0,2,4,6 ].map(e => e + OTTAVA) // detect diventa --> 79, 81, 83, 85
+
+	const GAIN_VALUE = 0.5
+
+	const AudioContext = window.AudioContext || window.webkitAudioContext
+	const ac = new AudioContext()
+	const dest = ac.createGain()
+	dest.gain.value = GAIN_VALUE
+	dest.connect(ac.destination)
+
+	let bottone = document.querySelector("#bottone")
+
+	bottone.onclick = function() {
+		let input = document.querySelector("#input_text").value;
+
+		let output = INIZIO_TRASMISSIONE + ' '
+		 output += NOTE[0] + ' '
+		 output += NOTE[0] + ' '
+		 output += NOTE[0] + ' '
+		 output += NOTE[0] + ' '
+		for (let i = 0; i < input.length; i++) {
+			const n = input.charCodeAt(i).toString(4).padStart(4,'0').split('').map(e => NOTE[parseInt(e)]).join(' ') + ' '
+			output += SEPARATORE_LETTERA + ' ' + n
+		}
+		document.querySelector("#risultato").innerHTML = output
+
+		const note = output.trim().split(' ')
+
+		const t = ac.currentTime
+
+		for (let i=0; i<note.length; i++) {
+			tone(ac, dest, t + i * TEMPO, note[i], SIN)
+		}
+	}
+	</script>
+	</body>
+	</html>
